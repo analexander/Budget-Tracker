@@ -20,4 +20,23 @@ req.onsuccess = ({ target }) => {
 //checking if app is online before reading db
 if(navigator.onLine) {
     checkDB();
+};
+
+//if db request is not successful, throw error
+req.onerror = e => {
+    console.log('Error:' + e.target.errorCode);
+}
+
+// allowing access to readwrite to store, add record to store
+saveRecord = record => {
+    const transaction = db.transaction(['pending'], 'readwrite');
+    const store = transaction.objectStore('pending');
+
+    store.add(record);
+}
+
+checkDatabase => {
+    const transaction = db.transaction(['pending'], 'readwrite');
+    const store = transaction.objectStore('pending');
+    const getAll = store.getAll();
 }
