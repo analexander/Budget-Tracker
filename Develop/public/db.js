@@ -63,3 +63,6 @@ checkDB = () => {
         }
     };
 }
+
+// listening for app to come back online
+window.addEventListener('online', checkDB());
