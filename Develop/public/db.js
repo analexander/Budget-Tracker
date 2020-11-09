@@ -1,4 +1,8 @@
-const indexedDB = window.indexedDB
+const indexedDB = window.indexedDB ||
+window.mozIndexedDB ||
+window.webkitIndexedDB ||
+window.msIndexedDB ||
+window.shimIndexedDB;
 
 // instantiate indexedDB, name of collection + version
 
