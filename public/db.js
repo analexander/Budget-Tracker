@@ -27,12 +27,12 @@ if (navigator.onLine) {
 };
 
 // if db request is not successful, throw error
-req.onerror = e => {
+req.onerror = (e) => {
     console.log('Error:' + e.target.errorCode);
 }
 
 // allowing access to readwrite to store, add record to store
-saveRecord = record => {
+function saveRecord(record) {
     const transaction = db.transaction(['pending'], 'readwrite');
     const store = transaction.objectStore('pending');
 
@@ -40,7 +40,7 @@ saveRecord = record => {
 }
 
 // checking db for any stored records, on success fetch post from api to send records to the db then delete from store
-checkDB = () => {
+function checkDB() {
     const transaction = db.transaction(['pending'], 'readwrite');
     const store = transaction.objectStore('pending');
     const getAll = store.getAll();
@@ -55,9 +55,7 @@ checkDB = () => {
                     'Content-Type': 'application/json'
                 }
             })
-                .then(res => {
-                    return res.json();
-                })
+                .then(res => res.json())
                 .then(() => {
                     // delete records if successful
                     const transaction = db.transaction(['pending'], 'readwrite');
@@ -69,4 +67,4 @@ checkDB = () => {
 }
 
 // listening for app to come back online
-window.addEventListener('online', checkDB());
+window.addEventListener('online', checkDB);
